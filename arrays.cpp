@@ -12,6 +12,7 @@ void print_menu(){
     cout<<" [3] Usun element"<<endl;
     cout<<" [4] Wypisz tablice"<<endl;
     cout<<" [5] Wyjdz"<<endl;
+    cout<<"------------------------"<<endl;
 }
 
 int main()
