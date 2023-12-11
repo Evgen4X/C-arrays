@@ -60,8 +60,8 @@ int main()
             cout<<"Podaj wartosc: ";
             cin>>value;
             do{
-            cout<<"Podaj miejsce dokad wstawic "<<value<<": ";
-            cin>>pos;
+                cout<<"Podaj miejsce dokad wstawic "<<value<<": ";
+                cin>>pos;
             } while(pos > n);
             a = new int[++n];
             for(int i = 0; i < pos; ++i){
