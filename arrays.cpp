@@ -1,6 +1,8 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -11,12 +13,17 @@ void print_menu(){
     cout<<" [2] Wstaw element"<<endl;
     cout<<" [3] Usun element"<<endl;
     cout<<" [4] Wypisz tablice"<<endl;
-    cout<<" [5] Wyjdz"<<endl;
+    cout<<" [5] Zapis do pliku"<<endl;
+    cout<<" [6] Odczyt z pliku"<<endl;
+    cout<<" [0] Wyjdz"<<endl;
     cout<<"------------------------"<<endl;
 }
 
 int main()
 {
+
+    fstream fio;
+
     for(int i = 0; ++i < 100;) rand();
     string action = "-1";
     int n;
@@ -83,13 +90,29 @@ int main()
                 b[i] = a[i];
             }
 
+            do{
+                cout<<"Podaj miejsce gdzie usunac element: ";
+                cin>>pos;
+            } while(pos > n);
+
             delete[] a;
-            a = new int[--n];
+            a = new int[n - 1];
+            bool flag = false;
             for(int i = 0; i < n; ++i){
-                a[i] = b[i];
+                if(i != pos){
+                    if (flag){
+                        a[i - 1] = b[i];
+                    } else {
+                        a[i] = b[i];
+                    }
+                } else {
+                    flag = true;
+                }
             }
 
-            cout<<"Usunieto element "<<b[n]<<" z konca tablicy"<<endl;
+            cout<<"Usunieto element "<<b[pos]<<" z pozycji "<<pos<<endl;
+
+            --n;
 
             delete[] b;
         } else if(action == "4"){
@@ -102,6 +125,52 @@ int main()
             }
             cout<<endl;
         } else if(action == "5"){
+            fio.open("output.txt", ios::out | ios::trunc);
+            if(fio.is_open()){
+                for(int i = 0; i < n; ++i){
+                    fio << a[i];
+                    if(i != n - 1){
+                        fio << endl;
+                    }
+                }
+            } else {
+                cout << "Nie udalo sie otworzyc plik "<<endl;
+            }
+        } else if(action == "6"){
+            string filename, line;
+            cout<<"Podaj nazwe pliku .txt (domyslna nazwa - input.txt) ";
+            cin>>filename;
+            if(filename.substr(filename.length() - 4, 4) != ".txt"){
+                filename = "input.txt";
+                cout<<"Uzyto pliku domyslnego"<<endl;
+            }
+            fio.open(filename.c_str(), ios::in);
+            if(fio.is_open()){
+                int length = 0;
+                while(!fio.eof()){
+                    getline(fio, line);
+                    length++;
+                }
+                fio.close();
+                fio.open(filename.c_str(), ios::in);
+                if(fio.is_open()){
+                    delete[] a;
+                    a = new int[length];
+                    n = length;
+                    length = 0;
+                    while(!fio.eof()){
+                        getline(fio, line);
+                        a[length++] = atoi(line.c_str());
+                    }
+                    fio.close();
+                } else {
+                    cout << "Nie udalo sie otworzyc plik "<<filename<<endl;
+                }
+            } else {
+                cout<<"Nie udalo sie otworzyc plik "<<filename<<endl;
+            }
+
+        } else if(action == "0"){
             break;
         } else{
             cout<<"Nieprawidlowa opcja"<<endl;
