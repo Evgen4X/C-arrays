@@ -9,13 +9,13 @@ using namespace std;
 void print_menu(){
     cout<<"Menu"<<endl;
     cout<<"------------------------"<<endl;
-    cout<<" [1] Dodaj element"<<endl;
-    cout<<" [2] Wstaw element"<<endl;
-    cout<<" [3] Usun element"<<endl;
-    cout<<" [4] Wypisz tablice"<<endl;
-    cout<<" [5] Zapis do pliku"<<endl;
-    cout<<" [6] Odczyt z pliku"<<endl;
-    cout<<" [0] Wyjdz"<<endl;
+    cout<<" [1] Add element"<<endl;
+    cout<<" [2] Insert element"<<endl;
+    cout<<" [3] Delete element"<<endl;
+    cout<<" [4] Print data"<<endl;
+    cout<<" [5] Dump into file"<<endl;
+    cout<<" [6] Read from file"<<endl;
+    cout<<" [0] Exit"<<endl;
     cout<<"------------------------"<<endl;
 }
 
@@ -44,7 +44,7 @@ int main()
             for(int i = 0; i < n; ++i){
                 b[i] = a[i];
             }
-            cout<<"Podaj wartosc: ";
+            cout<<"Enter value: ";
             cin>>value;
 
             delete[] a;
@@ -55,7 +55,7 @@ int main()
 
             delete[] b;
             a[n - 1] = value;
-            cout<<"Dodano element "<<value<<" na koniec tablicy"<<endl;
+            cout<<"Added element "<<value<<" at the end of the array"<<endl;
         } else if(action == "2"){
             b = new int[n];
             for(int i = 0; i < n; ++i){
@@ -64,10 +64,10 @@ int main()
 
             delete[] a;
 
-            cout<<"Podaj wartosc: ";
+            cout<<"Enter value: ";
             cin>>value;
             do{
-                cout<<"Podaj miejsce dokad wstawic "<<value<<": ";
+                cout<<"Enter desired position of new element "<<value<<": ";
                 cin>>pos;
             } while(pos > n);
             a = new int[++n];
@@ -80,7 +80,7 @@ int main()
                 a[i + 1] = b[i];
             }
 
-            cout<<"Dodano element "<<value<<" w pozycje "<<pos<<endl;
+            cout<<"Added element "<<value<<" at position "<<pos<<endl;
 
             delete[] b;
 
@@ -91,7 +91,7 @@ int main()
             }
 
             do{
-                cout<<"Podaj miejsce gdzie usunac element: ";
+                cout<<"Enter position of element to be deleted: ";
                 cin>>pos;
             } while(pos > n);
 
@@ -110,7 +110,7 @@ int main()
                 }
             }
 
-            cout<<"Usunieto element "<<b[pos]<<" z pozycji "<<pos<<endl;
+            cout<<"Deleted element "<<b[pos]<<" at position "<<pos<<endl;
 
             --n;
 
@@ -134,15 +134,15 @@ int main()
                     }
                 }
             } else {
-                cout << "Nie udalo sie otworzyc plik "<<endl;
+                cout << "Unnable to open the file "<<endl;
             }
         } else if(action == "6"){
             string filename, line;
-            cout<<"Podaj nazwe pliku .txt (domyslna nazwa - input.txt) ";
+            cout<<"Enter filename .txt (default - input.txt) ";
             cin>>filename;
             if(filename.substr(filename.length() - 4, 4) != ".txt"){
                 filename = "input.txt";
-                cout<<"Uzyto pliku domyslnego"<<endl;
+                cout<<"Used default file"<<endl;
             }
             fio.open(filename.c_str(), ios::in);
             if(fio.is_open()){
@@ -164,16 +164,16 @@ int main()
                     }
                     fio.close();
                 } else {
-                    cout << "Nie udalo sie otworzyc plik "<<filename<<endl;
+                    cout << "Unnable to open file "<<filename<<endl;
                 }
             } else {
-                cout<<"Nie udalo sie otworzyc plik "<<filename<<endl;
+                cout<<"Unnable to open file "<<filename<<endl;
             }
 
         } else if(action == "0"){
             break;
         } else{
-            cout<<"Nieprawidlowa opcja"<<endl;
+            cout<<"Imcorrect option"<<endl;
         }
         system("pause");
     }
